@@ -1,29 +1,37 @@
 package me.whiteship.inflearnthejavatest;
 
 import org.junit.jupiter.api.*;
-
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@TestInstance(TestInstance.Lifecycle.PER_METHOD) //이 설정으로 하면 클래스에서 하나의 인스턴스를 공유하기떄문에 @BeforeAll, @AfterforeAll 메서드를 static으로 안 만들어도됨
 class StudyTest {
 
-   int value  = 1;
-   //기본적으로 테스트간의 의존성을 없애기 위해서 테스트 인스턴스는 테스트 메서드마다 다르게 생성된다
-    // Junit5에서는 클래스 마다 인스턴스를 생성하게 설정 할 수 있음
+   //@RepeatedTest 반복 횟수와 반복 테스트 이름을 설정 할 수 있다.
+   // value = 반복할 횟수  currentRepetition = 현재 반복 횟수 totalRepetitions = 총 반복해야할 횟수
+   // repetitionInfo 타입의 인자를 받을 수 있다.
+   @DisplayName("스터디 만들기")
+   @RepeatedTest(value = 10 ,name ="{displayName}, {currentRepetition}/{totalRepetitions}")
+   void repeatTest(RepetitionInfo repetitionInfo){
+      System.out.println("test"+repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
+   }
 
-   @Test
-   @DisplayName("스터디 만들기 1")
-    void create_new_study(){
-       System.out.println(this);
-       System.out.println("스터디 만들기"+value++);
+   //@ParameterizedTest 테스트에 여러 다른 매개변수를 대입해가며 반복 실행한다.
+   // name = 테스트의 이름을 지정할 수있다.
+   // @ValueSource 테스트에서 사용할 매개변수를 지정
+   @DisplayName("스터디 만들기")
+   @ParameterizedTest(name = "{index} {displayName} message={0}")
+   @ValueSource(strings = {"날씨가","많이","추워지고","있네요"})
+   @EmptySource //E
+   @NullSource
+   @NullAndEmptySource
+   void parameterizedTest(String message) {
+      System.out.println(message);
    }
-   @Test
-   @DisplayName("스터디 만들기 2")
-    void create_new_study_again(){
-       System.out.println(this);
-       System.out.println("스터디 만들기" + value++);
-   }
+
 
 }
