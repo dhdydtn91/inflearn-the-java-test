@@ -1,37 +1,47 @@
 package me.whiteship.inflearnthejavatest;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StudyTest {
 
-   //@RepeatedTest 반복 횟수와 반복 테스트 이름을 설정 할 수 있다.
-   // value = 반복할 횟수  currentRepetition = 현재 반복 횟수 totalRepetitions = 총 반복해야할 횟수
-   // repetitionInfo 타입의 인자를 받을 수 있다.
-   @DisplayName("스터디 만들기")
-   @RepeatedTest(value = 10 ,name ="{displayName}, {currentRepetition}/{totalRepetitions}")
-   void repeatTest(RepetitionInfo repetitionInfo){
-      System.out.println("test"+repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
+   //테스트 순서를 드러내지 않는 이유는 단위테스트는 독립적으로 작동해서 다른 테스트에 영향을 주면 안되기 떄문에
+   // 순서를 중요시 해도 안되고 순서에 의존해서는 안되지만 예외적으로 순서가 필요할 떄가 있다.
+   // 시나리오 테스트 같은경우 테스트 케이스를 나눠 순서대로 실행되고 싶을때가 있을 때가 있는데 이럴때 사용하는 방법
+
+
+   @Order(1)
+   @Test
+   @DisplayName("스터디 만들기 1")
+    void create_new_study(){
+       System.out.println(this);
+
+   }
+   @Order(4)
+   @Test
+   @DisplayName("스터디 만들기 2")
+    void create_new_study_again(){
+       System.out.println(this);
    }
 
-   //@ParameterizedTest 테스트에 여러 다른 매개변수를 대입해가며 반복 실행한다.
-   // name = 테스트의 이름을 지정할 수있다.
-   // @ValueSource 테스트에서 사용할 매개변수를 지정
-   @DisplayName("스터디 만들기")
-   @ParameterizedTest(name = "{index} {displayName} message={0}")
-   @ValueSource(strings = {"날씨가","많이","추워지고","있네요"})
-   @EmptySource //E
-   @NullSource
-   @NullAndEmptySource
-   void parameterizedTest(String message) {
-      System.out.println(message);
+   @Order(3)
+   @Test
+   @DisplayName("스터디 만들기 3")
+   void create_new_study_todo(){
+      System.out.println(this);
    }
-
+   @Order(2)
+   @Test
+   @DisplayName("스터디 만들기 4")
+   void create_new_study_not(){
+      System.out.println(this);
+   }
 
 }
