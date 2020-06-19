@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
-
    //@RepeatedTest 반복 횟수와 반복 테스트 이름을 설정 할 수 있다.
    // value = 반복할 횟수  currentRepetition = 현재 반복 횟수 totalRepetitions = 총 반복해야할 횟수
    // repetitionInfo 타입의 인자를 받을 수 있다.
